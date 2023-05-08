@@ -1,11 +1,17 @@
 package com.example.kotlinlearning.models
 
+import android.util.Log
 import com.example.kotlinlearning.utils.DEFAULT_ICONS
 
 class MemoryGame(private val boardSize: BoardSIze) {
+    companion object{
+        private const val TAG = "MemoryGame"
+    }
+
     val cards: List<MemoryCard>
 
     var numPairsFound = 0
+    private var numCardFlips = 0
 
     private var indexOfSingleSelectedCard: Int? = null
 
@@ -16,6 +22,7 @@ class MemoryGame(private val boardSize: BoardSIze) {
     }
 
     fun flipCard(position: Int):Boolean {
+        numCardFlips++
         var card = cards[position]
 
         var foundMatch = false
@@ -34,8 +41,11 @@ class MemoryGame(private val boardSize: BoardSIze) {
 
     private fun checkForMatch(position1: Int, position2: Int): Boolean {
         if(cards[position1] != cards[position2]){
+            Log.i(TAG, "Not a match $position1 != $position2")
             return false
         }
+
+        Log.i(TAG, "Is a match")
         cards[position1].isMatched = true
         cards[position2].isMatched = true
         numPairsFound++
@@ -56,5 +66,9 @@ class MemoryGame(private val boardSize: BoardSIze) {
 
     fun isCardFaceUp(position: Int): Boolean {
         return cards[position].isFaceUp
+    }
+
+    fun getNumMoves(): Int {
+        return numCardFlips / 2
     }
 }
