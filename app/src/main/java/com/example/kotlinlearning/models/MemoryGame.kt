@@ -40,7 +40,7 @@ class MemoryGame(private val boardSize: BoardSIze) {
     }
 
     private fun checkForMatch(position1: Int, position2: Int): Boolean {
-        if(cards[position1] != cards[position2]){
+        if(cards[position1].identifier != cards[position2].identifier){
             Log.i(TAG, "Not a match $position1 != $position2")
             return false
         }
